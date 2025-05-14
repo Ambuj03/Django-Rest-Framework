@@ -35,6 +35,7 @@ class ProductDeleteAPIView(generics.DestroyAPIView):
     queryset = Products.objects.all()                                               
     serializer_class = ProductSerializer
 
+#SEE HOW THESE GENERIC API VIEWS INTERNALLY USE GenericApiView + ModelMixins, ctrl + lclick
 
 
 # Now lets try doing the same thing in one func that will handle and process 
