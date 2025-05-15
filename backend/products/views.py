@@ -1,26 +1,30 @@
 from api.views import ProductSerializer
 from .models import Products
 # Create your views here.
-from rest_framework import generics
+from rest_framework import generics, permissions,authentication
 
 class ProductDetailAPIView(generics.RetrieveAPIView):
     queryset = Products.objects.all()
     serializer_class = ProductSerializer
 
 
-class ProductCreateAPIView(generics.CreateAPIView):
-    queryset = Products.objects.all()
-    serializer_class = ProductSerializer
+# class ProductCreateAPIView(generics.CreateAPIView):
+#     queryset = Products.objects.all()
+#     serializer_class = ProductSerializer
 
 
-class ProductListAPIView(generics.ListCreateAPIView):
-    queryset = Products.objects.all()                                               
-    serializer_class = ProductSerializer
+# class ProductListAPIView(generics.ListCreateAPIView):
+#     queryset = Products.objects.all()                                               
+#     serializer_class = ProductSerializer
 
 
 class ProductListCreateAPIView(generics.ListCreateAPIView):
     queryset = Products.objects.all()                                               
     serializer_class = ProductSerializer
+
+    authentication_classes = [authentication.SessionAuthentication]
+    # permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.DjangoModelPermissions]
     
     # def perform_update(seld, serializer):
     #     instance = serializer.save()
