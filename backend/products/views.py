@@ -7,6 +7,8 @@ class ProductDetailAPIView(generics.RetrieveAPIView):
     queryset = Products.objects.all()
     serializer_class = ProductSerializer
 
+    # permission_classes = [permissions.DjangoModelPermissions]        
+
 
 # class ProductCreateAPIView(generics.CreateAPIView):
 #     queryset = Products.objects.all()
@@ -17,14 +19,21 @@ class ProductDetailAPIView(generics.RetrieveAPIView):
 #     queryset = Products.objects.all()                                               
 #     serializer_class = ProductSerializer
 
+from api.authentication import TokenAuthentication
+from .permissions import IsStaffEditorPermission
 
 class ProductListCreateAPIView(generics.ListCreateAPIView):
     queryset = Products.objects.all()                                               
     serializer_class = ProductSerializer
 
-    authentication_classes = [authentication.SessionAuthentication]
+    authentication_classes = [
+        authentication.SessionAuthentication,
+        # authentication.TokenAuthentication  
+        TokenAuthentication                                
+    ]
     # permission_classes = [permissions.IsAuthenticated]
-    permission_classes = [permissions.DjangoModelPermissions]
+    # permission_classes = [permissions.DjangoModelPermissions] 
+    permission_classes = [IsStaffEditorPermission] 
     
     # def perform_update(seld, serializer):
     #     instance = serializer.save()
